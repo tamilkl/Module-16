@@ -1,3 +1,6 @@
+
+
+
 # Experiment 10(e): AVL Tree - Left Rotation
 
 ## Aim
@@ -30,9 +33,107 @@ To write a Python function `def leftRotate(self, z)` to perform the left rotatio
 
 ## Program
 
-```python
+```
+class TreeNode(object):
+	def __init__(self, val):
+		self.val = val
+		self.left = None
+		self.right = None
+		self.height = 1
+
+class AVL_Tree(object):
+	def insert(self, root, key):
+		if not root:
+			return TreeNode(key)
+		elif key < root.val:
+			root.left = self.insert(root.left, key)
+		else:
+			root.right = self.insert(root.right, key)
+
+	
+		root.height = 1 + max(self.getHeight(root.left),
+						self.getHeight(root.right))
+
+		balance = self.getBalance(root)
+
+		if balance > 1 and key < root.left.val:
+			return self.rightRotate(root)
+
+	
+		if balance < -1 and key > root.right.val:
+			return self.leftRotate(root)
+
+		
+		if balance > 1 and key > root.left.val:
+			root.left = self.leftRotate(root.left)
+			return self.rightRotate(root)
+   
+		if balance < -1 and key < root.right.val:
+			root.right = self.rightRotate(root.right)
+			return self.leftRotate(root)
+
+		return root
+
+	def leftRotate(self, z):
+	    y=z.right
+	    t2=y.left
+	    
+	    y.left=z
+	    z.right=t2
+	    
+	    y.height=1+max(self.get_height(y.left),self.get_height(y.right))
+	    z.height=1+max(self.get_height(z.left),self.get_height(z.right))
+	    return y
+
+	
+
+	
+	def getHeight(self, root):
+		if not root:
+			return 0
+
+		return root.height
+
+	def getBalance(self, root):
+		if not root:
+			return 0
+
+		return self.getHeight(root.left) - self.getHeight(root.right)
+
+	def preOrder(self, root):
+
+		if not root:
+			return
+
+		print("{0} ".format(root.val), end="")
+		self.preOrder(root.left)
+		self.preOrder(root.right)
+
+
+myTree = AVL_Tree()
+root = None
+n=int(input())
+ # WRITE YOUR CODE HERE 
+ 
+root = myTree.insert(root, 13)
+root = myTree.insert(root, 10)
+root = myTree.insert(root, 15)
+root = myTree.insert(root, 5)
+root = myTree.insert(root, 11)
+root = myTree.insert(root, 16)
+root = myTree.insert(root, n)
+ # WRITE YOUR CODE HERE 
+
+
+print("Preorder traversal of the constructed AVL tree is")
+myTree.preOrder(root)
+print()
+
+
 ```
 
 ## OUTPUT
+![Screenshot (272)](https://github.com/user-attachments/assets/2136a1df-50d6-478f-9021-fd62bc015471)
 
 ## RESULT
+Thus the python program was initialised and successfully executed.
